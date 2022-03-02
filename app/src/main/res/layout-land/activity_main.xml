@@ -10,11 +10,10 @@
         android:id="@+id/button"
         android:layout_width="225dp"
         android:layout_height="175dp"
-        android:layout_marginTop="16dp"
         android:onClick="startQuiz"
         android:text="@string/button_quiz"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,13 +23,12 @@
         android:id="@+id/button2"
         android:layout_width="225dp"
         android:layout_height="175dp"
-        android:layout_marginTop="84dp"
         android:onClick="startDatabase"
         android:text="@string/button_database"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
