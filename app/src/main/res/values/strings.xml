@@ -3,5 +3,7 @@
 
     <string name="button_quiz">Quiz</string>
     <string name="button_database">Database</string>
-    <string name="button_addData">+</string>
+    <string name="button_add">Add to database</string>
+    <string name="button_remove">Remove from database</string>
+    <string name="button_alphabetical">Toggle between alphabetical and reverse alphabetical</string>
 </resources>
