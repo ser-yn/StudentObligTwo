@@ -29,7 +29,7 @@ class EntryViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun delete() {
+    fun deleteAll() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAll()
         }
