@@ -13,6 +13,9 @@ interface EntryDao {
     @Delete
     fun delete(entryEntity: EntryEntity)
 
+    @Query("DELETE FROM entry_table")
+    suspend fun deleteAll()
+
     @Query("SELECT * FROM entry_table ORDER BY CASE WHEN :isAsc = 1 THEN name END ASC, CASE WHEN :isAsc = 0 THEN name END DESC")
     fun getAlphabetically(isAsc: Boolean): LiveData<List<EntryEntity>>
 }

@@ -19,9 +19,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
-        android:tint="@color/black"
         android:clickable="true"
         android:contentDescription="@string/button_remove"
+        android:onClick="startRemove"
+        android:tint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_remove" />

@@ -1,10 +1,13 @@
 package com.example.studentobligtwo
 
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentobligtwo.Database.EntryEntity
 
@@ -15,7 +18,7 @@ class ItemAdapter:RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
     //Since viewHolder is only used inside ItemAdapter, we can make it nested to show that relationship
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.item_title)
-        val textViewTwo: TextView = view.findViewById(R.id.item_desc)
+        val imageView: ImageView = view.findViewById(R.id.item_image)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -25,7 +28,7 @@ class ItemAdapter:RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val currentItem = entryList[position]
         holder.textView.text = currentItem.name
-        holder.textViewTwo.text = currentItem.imageResource
+        holder.imageView.setImageURI(Uri.parse("android.resource://drawables" + R.drawable.ic_placeholder))
     }
 
     override fun getItemCount(): Int = entryList.size

@@ -32,6 +32,12 @@ class DatabaseActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun startRemove(view: View) {
+        mEntryViewModel.delete()
+        val intent = Intent(this, RemoveActivity::class.java)
+        startActivity(intent)
+    }
+
     fun sort(view: View){
         mEntryViewModel.sortAlphabetically()
     }

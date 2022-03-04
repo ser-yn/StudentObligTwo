@@ -11,6 +11,10 @@ class EntryRepository(private val entryDao: EntryDao) {
         entryDao.insert(entryEntity)
     }
 
+    suspend fun deleteAll(){
+        entryDao.deleteAll()
+    }
+
     fun sortAlphabetically (reverseBool: Boolean){
         entryDao.getAlphabetically(reverseBool)
         Log.w("myApp", "AlphaWorks");

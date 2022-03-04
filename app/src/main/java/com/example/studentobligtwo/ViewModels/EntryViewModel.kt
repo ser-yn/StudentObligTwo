@@ -29,6 +29,12 @@ class EntryViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun delete() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAll()
+        }
+    }
+
     fun sortAlphabetically(){
         viewModelScope.launch(Dispatchers.IO) {
             repository.sortAlphabetically(alphabetBool)
