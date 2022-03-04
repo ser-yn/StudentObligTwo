@@ -31,4 +31,8 @@ class DatabaseActivity : AppCompatActivity() {
         val intent = Intent(this, AddActivity::class.java)
         startActivity(intent)
     }
+
+    fun sort(view: View){
+        mEntryViewModel.sortAlphabetically()
+    }
 }

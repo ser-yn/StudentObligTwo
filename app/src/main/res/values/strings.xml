@@ -6,4 +6,6 @@
     <string name="button_add">Add to database</string>
     <string name="button_remove">Remove from database</string>
     <string name="button_alphabetical">Toggle between alphabetical and reverse alphabetical</string>
+    <string name="button_searchImage">Select an Image</string>
+
 </resources>

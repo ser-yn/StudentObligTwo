@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.example.studentobligtwo.Database.EntryEntity
 import com.example.studentobligtwo.ViewModels.EntryViewModel
 
@@ -25,8 +24,8 @@ class AddActivity : AppCompatActivity() {
     }
 
     fun insertDataInDatabase(view: View){
-        textOne = findViewById(R.id.editOne)
-        textTwo = findViewById(R.id.editTwo)
+        textOne = findViewById(R.id.add_name)
+        textTwo = findViewById(R.id.add_name)
 
         val entry = EntryEntity (textOne.text.toString(), textTwo.text.toString())
         mViewModel.insert(entry)
