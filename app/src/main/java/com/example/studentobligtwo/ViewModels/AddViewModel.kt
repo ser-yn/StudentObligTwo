@@ -1,6 +1,7 @@
 package com.example.studentobligtwo.ViewModels
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.studentobligtwo.Database.EntryDatabase
@@ -11,6 +12,8 @@ import kotlinx.coroutines.launch
 
 class AddViewModel(application: Application): AndroidViewModel(application) {
     private val repository: EntryRepository
+
+    var imgUri: Uri? = null
 
     init {
         val entryDao = EntryDatabase.getDatabase(application).entryDao()
