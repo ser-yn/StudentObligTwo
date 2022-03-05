@@ -10,11 +10,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.graphics.drawable.toDrawable
+import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModelProvider
 import com.example.studentobligtwo.Database.EntryEntity
 import com.example.studentobligtwo.ViewModels.EntryViewModel
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+
 
 class AddActivity : AppCompatActivity() {
 
@@ -24,7 +26,7 @@ class AddActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
     private lateinit var addButton: Button
 
-    private lateinit var imgUri: Uri
+    private var imgUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,14 +42,40 @@ class AddActivity : AppCompatActivity() {
         mViewModel = ViewModelProvider(this).get(EntryViewModel::class.java)
     }
 
-    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        imageView.setImageURI(uri)
-        imgUri = uri!!
+    /*
+    * Creates an ActivityResultLauncher<Intent> that set URI for selected image on the imageView.
+    * This is the "new" way of doing since onActivityResult was depricated.
+    *
+    * Also flags the view with URI permission so it can be opened later.
+    *
+    * I check if the user aborted the Imageselection
+    * If he does i make the addButton unclickable again
+    * If an Image was choosen before and the second selection was aborted the button stays clickable
+    */
+    private var chooseImageResult: ActivityResultLauncher<Intent>? = registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode != RESULT_OK || result.data == null) {
+            if (imgUri == null) {
+                addButton.isEnabled = false
+            }
+            return@registerForActivityResult
+        }
+        imgUri = result.data!!.data
+        contentResolver.takePersistableUriPermission(
+            imgUri!!,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
+        imageView.setImageURI(imgUri)
     }
 
+    // Makes the add Button clickable and starts the Intent to get a Image Uri from the Gallery
     fun getImage(view: View){
         addButton.isEnabled = true
-        getContent.launch("image/*")
+
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_OPEN_DOCUMENT
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        chooseImageResult!!.launch(intent)
     }
 
     fun addToDatabase(view: View){
@@ -55,10 +83,10 @@ class AddActivity : AppCompatActivity() {
             Toast.makeText(this, "You need to enter a name", Toast.LENGTH_SHORT).show()
         }
         else{
-            val entry = EntryEntity (textView.text.toString(), textView.text.toString())
+            val entry = EntryEntity (textView.text.toString(), imgUri!!)
             mViewModel.insert(entry)
-
             Toast.makeText(this, textView.text.toString() + " has been added to Database", Toast.LENGTH_SHORT).show()
+            imgUri = null
             textView.text=""
             addButton.isEnabled = false
             imageView.setImageDrawable(getDrawable(R.drawable.ic_placeholder))

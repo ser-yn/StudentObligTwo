@@ -1,6 +1,7 @@
 package com.example.studentobligtwo.Database
 
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,4 +11,5 @@ import androidx.room.PrimaryKey
 data class EntryEntity(
     @PrimaryKey
     val name: String,
-    val imageResource: String)
+    val imageResource: Uri
+)

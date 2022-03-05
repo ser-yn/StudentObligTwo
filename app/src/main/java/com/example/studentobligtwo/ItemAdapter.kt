@@ -28,7 +28,7 @@ class ItemAdapter:RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val currentItem = entryList[position]
         holder.textView.text = currentItem.name
-        holder.imageView.setImageURI(Uri.parse("android.resource://drawables" + R.drawable.ic_placeholder))
+        holder.imageView.setImageURI(currentItem.imageResource)
     }
 
     override fun getItemCount(): Int = entryList.size
