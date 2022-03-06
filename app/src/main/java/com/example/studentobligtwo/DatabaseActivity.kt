@@ -34,7 +34,6 @@ class DatabaseActivity : AppCompatActivity() {
     }
 
     fun startRemove(view: View) {
-        mEntryViewModel.deleteAll()
         val intent = Intent(this, RemoveActivity::class.java)
         startActivity(intent)
     }

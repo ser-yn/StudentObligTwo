@@ -11,7 +11,7 @@ interface EntryDao {
     suspend fun insert(entryEntity: EntryEntity)
 
     @Delete
-    fun delete(entryEntity: EntryEntity)
+    suspend fun delete(entryEntity: EntryEntity)
 
     @Query("DELETE FROM entry_table")
     suspend fun deleteAll()
