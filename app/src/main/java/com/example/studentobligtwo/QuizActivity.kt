@@ -6,9 +6,13 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.ViewModel
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.studentobligtwo.ViewModels.QuizViewModel
+import android.content.pm.ActivityInfo
+import android.util.Log
+
 
 class QuizActivity : AppCompatActivity() {
     private lateinit var viewModel: QuizViewModel
@@ -23,6 +27,7 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var butAnsThree: Button
     private lateinit var butCheck: Button
     private lateinit var butPress: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,80 @@ class QuizActivity : AppCompatActivity() {
 
         textViewRight.text = "Right Answers: " + viewModel.rightCounter
         textViewWrong.text = "Wrong Answers: " + viewModel.wrongCounter
+
+        if (viewModel.wasRotated) {
+            Log.w("OrientChange", "Was Rotated")
+            setKnownAnswerAndPicture()
+        } else {
+            Log.w("OrientChange", "Was Not Rotated")
+            setPictureAndAnswersRandom()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.wasRotated = true
+    }
+
+    private fun setKnownAnswerAndPicture(){
+        viewModel.entityList.observe(this, Observer {
+
+        })
+    }
+
+    private fun setPictureAndAnswersRandom(){
+        viewModel.entityList.observe(this, Observer {
+
+            val listSize: Int = it.size
+            var rightAnswer: Int = (0 until listSize).random()
+            var wrongAnswerOne: Int = (0 until listSize).random()
+            var wrongAnswerTwo: Int = (0 until listSize).random()
+            //Not to get the same Value Twice I firstly check the first wrong then the second wrong answer
+            //The while loop gets broken once it's not the same value anymore
+            while (true) {
+                if (rightAnswer==wrongAnswerOne){
+                    wrongAnswerOne = (0 until listSize).random()
+                }
+                else{
+                    break
+                }
+            }
+            while (true) {
+                if (rightAnswer==wrongAnswerTwo || wrongAnswerOne==wrongAnswerTwo){
+                    wrongAnswerTwo = (0 until listSize).random()
+                }
+                else{
+                    break
+                }
+            }
+
+            imgView.setImageURI(it[rightAnswer].imageResource)
+
+            var randButton: Int = (0 until 3).random()
+            when(randButton){
+                0 -> {
+                    butAnsOne.text = it[rightAnswer].name
+                    butAnsTwo.text = it[wrongAnswerOne].name
+                    butAnsThree.text = it[wrongAnswerTwo].name
+
+                    viewModel.rightButtonId = R.id.buttonAnswerOne
+                }
+                1 -> {
+                    butAnsOne.text = it[wrongAnswerOne].name
+                    butAnsTwo.text = it[rightAnswer].name
+                    butAnsThree.text = it[wrongAnswerTwo].name
+
+                    viewModel.rightButtonId = R.id.buttonAnswerTwo
+                }
+                2 -> {
+                    butAnsOne.text = it[wrongAnswerOne].name
+                    butAnsTwo.text = it[wrongAnswerTwo].name
+                    butAnsThree.text = it[rightAnswer].name
+
+                    viewModel.rightButtonId = R.id.buttonAnswerThree
+                }
+            }
+        })
     }
 
     fun pressedAnswerButton(view: View) {
@@ -57,7 +136,20 @@ class QuizActivity : AppCompatActivity() {
     }
 
     fun evaluateAnswer(view: View) {
-        viewModel.rightCounter++
-        textViewRight.text = "Right Answers: " + viewModel.rightCounter
+        butCheck.isEnabled = false
+        butPress.setBackgroundColor(resources.getColor(R.color.dark_Green))
+        if(viewModel.pressedButtonId==viewModel.rightButtonId){
+            viewModel.rightCounter++
+            textViewRight.text = "Right answers: " + viewModel.rightCounter.toString()
+            Toast.makeText(this, "Great, you're right", Toast.LENGTH_SHORT).show()
+        }
+        else {
+            var butTempRight: Button = findViewById(viewModel.rightButtonId)
+            viewModel.wrongCounter++
+            textViewWrong.text = "Wrong answers: " + viewModel.wrongCounter.toString()
+            Toast.makeText(this, "Correct Answer is: " + butTempRight.text, Toast.LENGTH_SHORT).show()
+        }
+
+        setPictureAndAnswersRandom()
     }
 }

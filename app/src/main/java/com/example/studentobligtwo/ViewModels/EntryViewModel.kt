@@ -23,12 +23,6 @@ class EntryViewModel(application: Application): AndroidViewModel(application) {
         alphabetBool = false
     }
 
-    fun insert(entryEntity: EntryEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.insert(entryEntity)
-        }
-    }
-
     fun deleteAll() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAll()
