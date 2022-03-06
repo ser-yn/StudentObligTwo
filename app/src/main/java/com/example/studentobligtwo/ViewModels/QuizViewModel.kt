@@ -17,6 +17,11 @@ class QuizViewModel(application: Application): AndroidViewModel(application) {
     var rightButtonId: Int = 0
     var pressedButtonId: Int? = 0
 
+    var rightAnswer: Int = 0
+    var wrongAnswerOne: Int = 0
+    var wrongAnswerTwo: Int = 0
+    var randButton: Int = 0
+
     var entityList: LiveData<List<EntryEntity>>
     private val repository: EntryRepository
 

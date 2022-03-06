@@ -33,6 +33,8 @@ class QuizActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
 
+
+
         viewModel = ViewModelProvider(this).get(QuizViewModel::class.java)
 
         textViewRight = findViewById(R.id.textView_rightAnswers)
@@ -65,6 +67,31 @@ class QuizActivity : AppCompatActivity() {
     private fun setKnownAnswerAndPicture(){
         viewModel.entityList.observe(this, Observer {
 
+            imgView.setImageURI(it[viewModel.rightAnswer].imageResource)
+
+            when(viewModel.randButton){
+                0 -> {
+                    butAnsOne.text = it[viewModel.rightAnswer].name
+                    butAnsTwo.text = it[viewModel.wrongAnswerOne].name
+                    butAnsThree.text = it[viewModel.wrongAnswerTwo].name
+
+                    viewModel.rightButtonId = R.id.buttonAnswerOne
+                }
+                1 -> {
+                    butAnsOne.text = it[viewModel.wrongAnswerOne].name
+                    butAnsTwo.text = it[viewModel.rightAnswer].name
+                    butAnsThree.text = it[viewModel.wrongAnswerTwo].name
+
+                    viewModel.rightButtonId = R.id.buttonAnswerTwo
+                }
+                2 -> {
+                    butAnsOne.text = it[viewModel.wrongAnswerOne].name
+                    butAnsTwo.text = it[viewModel.wrongAnswerTwo].name
+                    butAnsThree.text = it[viewModel.rightAnswer].name
+
+                    viewModel.rightButtonId = R.id.buttonAnswerThree
+                }
+            }
         })
     }
 
@@ -94,10 +121,15 @@ class QuizActivity : AppCompatActivity() {
                 }
             }
 
+            //Add to view Model so same Picture is set on rotation Change
+            viewModel.rightAnswer = rightAnswer
+            viewModel.wrongAnswerOne = wrongAnswerOne
+            viewModel.wrongAnswerTwo = wrongAnswerTwo
+
             imgView.setImageURI(it[rightAnswer].imageResource)
 
-            var randButton: Int = (0 until 3).random()
-            when(randButton){
+            viewModel.randButton = (0 until 3).random()
+            when(viewModel.randButton){
                 0 -> {
                     butAnsOne.text = it[rightAnswer].name
                     butAnsTwo.text = it[wrongAnswerOne].name
