@@ -12,12 +12,13 @@ import com.example.studentobligtwo.ViewModels.EntryViewModel
 class DatabaseActivity : AppCompatActivity() {
 
     private lateinit var mEntryViewModel: EntryViewModel
+    private lateinit var adapter: ItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_database)
 
-        val adapter = ItemAdapter()
+        adapter = ItemAdapter()
         val recyclerView = findViewById<RecyclerView>(R.id.Data_List_View)
         recyclerView.adapter = adapter
 
@@ -39,6 +40,13 @@ class DatabaseActivity : AppCompatActivity() {
     }
 
     fun sort(view: View){
-        mEntryViewModel.sortAlphabetically()
+        mEntryViewModel.readAllData.observe(this, Observer { it ->
+            it.sortWith(compareBy { it.name })
+            if (!mEntryViewModel.alphabetBool){
+                it.reverse()
+            }
+            mEntryViewModel.alphabetBool = !mEntryViewModel.alphabetBool
+            adapter.notifyDataSetChanged()
+        })
     }
 }

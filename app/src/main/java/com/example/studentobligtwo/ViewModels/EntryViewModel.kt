@@ -12,14 +12,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class EntryViewModel(application: Application): AndroidViewModel(application) {
-    val readAllData: LiveData<List<EntryEntity>>
+    val readAllData: LiveData<MutableList<EntryEntity>>
     private val repository: EntryRepository
-    private var alphabetBool: Boolean
+    var alphabetBool: Boolean
 
     init {
         val entryDao = EntryDatabase.getDatabase(application).entryDao()
         repository = EntryRepository(entryDao)
-        readAllData = repository.readAllData
+        readAllData = repository.readAllDataMutable
         alphabetBool = false
     }
 
@@ -27,14 +27,5 @@ class EntryViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAll()
         }
-    }
-
-    fun sortAlphabetically(){
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.sortAlphabetically(alphabetBool)
-        }
-        alphabetBool =! alphabetBool
-
-        Log.w("myApp", alphabetBool.toString());
     }
 }

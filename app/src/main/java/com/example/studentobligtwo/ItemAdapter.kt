@@ -33,7 +33,7 @@ class ItemAdapter:RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     override fun getItemCount(): Int = entryList.size
 
-    fun setData(entry: List<EntryEntity>){
+    fun setData(entry: MutableList<EntryEntity>){
         this.entryList = entry
         notifyDataSetChanged()
     }

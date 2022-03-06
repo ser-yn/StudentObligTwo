@@ -5,7 +5,8 @@ import androidx.lifecycle.LiveData
 
 class EntryRepository(private val entryDao: EntryDao) {
 
-    val readAllData: LiveData<List<EntryEntity>> = entryDao.getAlphabetically(true)
+    val readAllData: LiveData<List<EntryEntity>> = entryDao.getAlphabetically()
+    val readAllDataMutable: LiveData<MutableList<EntryEntity>> = entryDao.getMutable()
 
     suspend fun insert (entryEntity: EntryEntity){
         entryDao.insert(entryEntity)
@@ -13,10 +14,5 @@ class EntryRepository(private val entryDao: EntryDao) {
 
     suspend fun deleteAll(){
         entryDao.deleteAll()
-    }
-
-    fun sortAlphabetically (reverseBool: Boolean){
-        entryDao.getAlphabetically(reverseBool)
-        Log.w("myApp", "AlphaWorks");
     }
 }
