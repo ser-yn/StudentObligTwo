@@ -15,6 +15,7 @@ class QuizViewModel(application: Application): AndroidViewModel(application) {
     var wrongCounter: Int = 0
 
     var rightButtonId: Int = 0
+    var wrongButtonId: Int = 0
     var pressedButtonId: Int? = 0
 
     var rightAnswer: Int = 0

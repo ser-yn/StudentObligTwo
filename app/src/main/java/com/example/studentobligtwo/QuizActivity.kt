@@ -15,7 +15,8 @@ import android.util.Log
 
 
 class QuizActivity : AppCompatActivity() {
-    private lateinit var viewModel: QuizViewModel
+    //Public for Testing
+    lateinit var viewModel: QuizViewModel
 
     private lateinit var textViewRight: TextView
     private lateinit var textViewWrong: TextView
@@ -135,6 +136,7 @@ class QuizActivity : AppCompatActivity() {
                     butAnsTwo.text = it[wrongAnswerOne].name
                     butAnsThree.text = it[wrongAnswerTwo].name
 
+                    viewModel.wrongButtonId = R.id.buttonAnswerTwo
                     viewModel.rightButtonId = R.id.buttonAnswerOne
                 }
                 1 -> {
@@ -142,6 +144,7 @@ class QuizActivity : AppCompatActivity() {
                     butAnsTwo.text = it[rightAnswer].name
                     butAnsThree.text = it[wrongAnswerTwo].name
 
+                    viewModel.wrongButtonId = R.id.buttonAnswerOne
                     viewModel.rightButtonId = R.id.buttonAnswerTwo
                 }
                 2 -> {
@@ -149,6 +152,7 @@ class QuizActivity : AppCompatActivity() {
                     butAnsTwo.text = it[wrongAnswerTwo].name
                     butAnsThree.text = it[rightAnswer].name
 
+                    viewModel.wrongButtonId = R.id.buttonAnswerTwo
                     viewModel.rightButtonId = R.id.buttonAnswerThree
                 }
             }
