@@ -1,10 +1,16 @@
 package com.example.studentobligtwo.Database
 
 import android.content.Context
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
 
 //Our Database only has one table for the quiz, which is defined by our EntryEntity
 @Database(entities = [EntryEntity::class], version = 1, exportSchema = false)
@@ -30,7 +36,16 @@ abstract class EntryDatabase : RoomDatabase() {
                     context.applicationContext,
                     EntryDatabase::class.java,
                     "entry_database"
-                ).build()
+                ).addCallback(object : RoomDatabase.Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
+                            //pre-populate data
+                            GlobalScope.launch {
+                                INSTANCE?.entryDao()?.insertList(DatabaseGenerator.getEntrys())
+                            }
+                        }
+                    })
+                    .build()
                 INSTANCE = instance
                 return instance
             }

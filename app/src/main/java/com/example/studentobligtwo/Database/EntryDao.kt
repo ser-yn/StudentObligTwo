@@ -10,11 +10,11 @@ interface EntryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(entryEntity: EntryEntity)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertList(entryEntityList: List<EntryEntity>)
+
     @Delete
     suspend fun delete(entryEntity: EntryEntity)
-
-    @Query("DELETE FROM entry_table")
-    suspend fun deleteAll()
 
     @Query("SELECT * FROM entry_table ORDER BY name ASC")
     fun getAlphabetically(): LiveData<List<EntryEntity>>

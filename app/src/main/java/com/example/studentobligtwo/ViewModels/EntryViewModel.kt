@@ -22,10 +22,4 @@ class EntryViewModel(application: Application): AndroidViewModel(application) {
         readAllData = repository.readAllDataMutable
         alphabetBool = false
     }
-
-    fun deleteAll() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAll()
-        }
-    }
 }
