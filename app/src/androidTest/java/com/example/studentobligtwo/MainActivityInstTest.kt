@@ -23,7 +23,7 @@ class MainActivityInstTest {
     fun clickButton(){
         Intents.init()
 
-        Espresso.onView(withId(R.id.quizButton)).perform(click())
-        intended(hasComponent(QuizActivity::class.java.name))
+        Espresso.onView(withId(R.id.DataButton)).perform(click())
+        intended(hasComponent(DatabaseActivity::class.java.name))
     }
 }
