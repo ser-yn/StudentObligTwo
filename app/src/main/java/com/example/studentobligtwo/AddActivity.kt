@@ -21,7 +21,7 @@ import com.example.studentobligtwo.ViewModels.AddViewModel
 
 class AddActivity : AppCompatActivity() {
 
-    private lateinit var mViewModel: AddViewModel
+    lateinit var mViewModel: AddViewModel
 
     private lateinit var textView: TextView
     private lateinit var imageView: ImageView

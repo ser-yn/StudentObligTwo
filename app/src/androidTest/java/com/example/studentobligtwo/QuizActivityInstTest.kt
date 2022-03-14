@@ -1,5 +1,6 @@
 package com.example.studentobligtwo
 
+import android.util.Log
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.intent.Intents
@@ -24,14 +25,16 @@ class QuizActivityInstTest {
 
     @Test
     fun insertRightAnswer(){
+        Log.w("Right COunter Before", mainActivityTestRule.activity.viewModel.rightCounter.toString())
         Espresso.onView(ViewMatchers.withId(mainActivityTestRule.activity.viewModel.rightButtonId)).perform(ViewActions.click())
-        Assert.assertEquals(mainActivityTestRule.activity.viewModel.rightCounter, 1)
+        Log.w("Right COunter After", mainActivityTestRule.activity.viewModel.rightCounter.toString())
+        Assert.assertEquals(1, mainActivityTestRule.activity.viewModel.rightCounter)
     }
 
     @Test
     fun insertWrongAnswer(){
         Espresso.onView(ViewMatchers.withId(mainActivityTestRule.activity.viewModel.wrongButtonId)).perform(ViewActions.click())
-        Assert.assertEquals(mainActivityTestRule.activity.viewModel.wrongCounter, 1)
+        Assert.assertEquals(1, mainActivityTestRule.activity.viewModel.wrongCounter)
     }
 
 }
